@@ -1,0 +1,9 @@
+src
+*.test.ts
+*.test.tsx
+*.test-d.ts
+vitest*.config.ts
+tsconfig*.json
+biome.json
+.gitignore
+node_modules

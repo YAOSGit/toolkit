@@ -1,0 +1,128 @@
+{
+	"name": "@yaos-git/toolkit",
+	"version": "0.0.26-3-19a",
+	"description": "Shared infrastructure for the YAOSGit CLI/TUI tool suite",
+	"type": "module",
+	"exports": {
+		"./types": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/types/index.js"
+		},
+		"./theme": {
+			"types": "./dist/theme/index.d.ts",
+			"import": "./dist/theme/index.js"
+		},
+		"./build": {
+			"types": "./dist/build/index.d.ts",
+			"import": "./dist/build/index.js"
+		},
+		"./cli": {
+			"types": "./dist/cli/index.d.ts",
+			"import": "./dist/cli/index.js"
+		},
+		"./cli/config": {
+			"types": "./dist/cli/config/index.d.ts",
+			"import": "./dist/cli/config/index.js"
+		},
+		"./cli/frontmatter": {
+			"types": "./dist/cli/frontmatter/index.d.ts",
+			"import": "./dist/cli/frontmatter/index.js"
+		},
+		"./cli/logger": {
+			"types": "./dist/cli/logger/index.d.ts",
+			"import": "./dist/cli/logger/index.js"
+		},
+		"./cli/fuzzy": {
+			"types": "./dist/cli/fuzzy/index.d.ts",
+			"import": "./dist/cli/fuzzy/index.js"
+		},
+		"./cli/watcher": {
+			"types": "./dist/cli/watcher/index.d.ts",
+			"import": "./dist/cli/watcher/index.js"
+		},
+		"./tui/http": {
+			"types": "./dist/tui/http/index.d.ts",
+			"import": "./dist/tui/http/index.js"
+		},
+		"./tui/overlay": {
+			"types": "./dist/tui/overlay/index.d.ts",
+			"import": "./dist/tui/overlay/index.js"
+		},
+		"./tui/components": {
+			"types": "./dist/tui/components/index.d.ts",
+			"import": "./dist/tui/components/index.js"
+		},
+		"./tui/scroll": {
+			"types": "./dist/tui/scroll/index.d.ts",
+			"import": "./dist/tui/scroll/index.js"
+		},
+		"./tui/commands": {
+			"types": "./dist/tui/commands/index.d.ts",
+			"import": "./dist/tui/commands/index.js"
+		},
+		"./tui/process": {
+			"types": "./dist/tui/process/index.d.ts",
+			"import": "./dist/tui/process/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"dev:typescript": "tsgo --watch --noEmit -p tsconfig.app.json",
+		"dev:test": "vitest --watch",
+		"build": "tsgo -p tsconfig.app.json",
+		"lint": "npm run lint:types && npm run lint:fix && npm run lint:format",
+		"lint:check": "biome lint .",
+		"lint:fix": "biome check . --write",
+		"lint:format": "biome format . --write",
+		"lint:types": "tsgo --noEmit -p tsconfig.app.json",
+		"test": "vitest run",
+		"test:unit": "vitest run -c vitest.unit.config.ts",
+		"test:types": "vitest run -c vitest.type.config.ts",
+		"test:react": "vitest run -c vitest.react.config.ts"
+	},
+	"dependencies": {
+		"chalk": "^5.6.2",
+		"chokidar": "^5.0.0",
+		"commander": "^14.0.3",
+		"yaml": "^2.8.2",
+		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.8",
+		"@testing-library/react": "^16.3.2",
+		"@types/node": "^25.5.0",
+		"@types/react": "^19.2.14",
+		"@typescript/native-preview": "^7.0.0-dev.20260315.1",
+		"esbuild": "^0.27.1",
+		"ink": "^6.8.0",
+		"ink-testing-library": "^4.0.0",
+		"jsdom": "^29.0.0",
+		"react": "^19.2.4",
+		"vitest": "^4.1.0"
+	},
+	"peerDependencies": {
+		"esbuild": ">=0.20.0",
+		"ink": ">=6.0.0",
+		"react": ">=19.0.0",
+		"vitest": ">=4.0.0"
+	},
+	"peerDependenciesMeta": {
+		"esbuild": {
+			"optional": true
+		},
+		"ink": {
+			"optional": true
+		},
+		"react": {
+			"optional": true
+		},
+		"vitest": {
+			"optional": true
+		}
+	}
+}
