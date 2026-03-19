@@ -10,14 +10,15 @@ export type KeyBinding = {
 	meta?: boolean;
 };
 
-export type BaseDeps = {
-	ui: OverlayState & {
+export type BaseDeps<T extends string = string> = {
+	ui: OverlayState<T> & {
 		cycleFocus: () => void;
 	};
 	onQuit: () => void;
 };
 
-export type Command<TDeps extends BaseDeps = BaseDeps> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Command<TDeps extends BaseDeps<any> = BaseDeps> = {
 	id: string;
 	keys: KeyBinding[];
 	displayKey: string;

@@ -1,7 +1,7 @@
 import { Box, Text, useInput } from 'ink';
 import type { BaseDeps, Command } from '../../types/commands.js';
 
-export type HelpMenuProps<TDeps extends BaseDeps> = {
+export type HelpMenuProps<TDeps extends BaseDeps<any>> = {
 	commands: Command<TDeps>[];
 	sectionColors: Record<string, string>;
 	title: string;
@@ -10,7 +10,7 @@ export type HelpMenuProps<TDeps extends BaseDeps> = {
 	brandColor?: string;
 };
 
-export function HelpMenu<TDeps extends BaseDeps>({
+export function HelpMenu<TDeps extends BaseDeps<any>>({
 	commands,
 	sectionColors,
 	title,

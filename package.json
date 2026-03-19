@@ -1,6 +1,6 @@
 {
 	"name": "@yaos-git/toolkit",
-	"version": "0.0.26-3-19a",
+	"version": "0.0.26-3-19b",
 	"description": "Shared infrastructure for the YAOSGit CLI/TUI tool suite",
 	"type": "module",
 	"exports": {

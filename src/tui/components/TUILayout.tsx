@@ -6,7 +6,7 @@ import { AppShell } from './AppShell.js';
 import { CommandFooter } from './CommandFooter.js';
 import { HelpMenu } from './HelpMenu.js';
 
-type TUILayoutProps<TDeps extends BaseDeps> = {
+type TUILayoutProps<TDeps extends BaseDeps<any>> = {
 	/** Project name displayed in footer branding: "YAOSGit : {brand}" */
 	brand: string;
 	theme: TUITheme;
@@ -33,7 +33,7 @@ type TUILayoutProps<TDeps extends BaseDeps> = {
 	children: React.ReactNode;
 };
 
-export function TUILayout<TDeps extends BaseDeps>({
+export function TUILayout<TDeps extends BaseDeps<any>>({
 	brand,
 	theme,
 	commands,

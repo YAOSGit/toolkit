@@ -13,7 +13,7 @@ import {
 const CONFIRM_YES_KEYS = [{ textKey: 'y' }, { specialKey: 'return' }];
 const CONFIRM_NO_KEYS = [{ textKey: 'n' }, { specialKey: 'escape' }];
 
-export function createCommandsProvider<TDeps extends BaseDeps>(
+export function createCommandsProvider<TDeps extends BaseDeps<any>>(
 	projectCommands: Command<TDeps>[],
 ) {
 	const sharedCommands: Command<TDeps>[] = [

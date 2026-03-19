@@ -3,7 +3,7 @@ import type React from 'react';
 import type { BaseDeps, Command } from '../../types/commands.js';
 import type { TUITheme } from '../../types/theme.js';
 
-type CommandFooterProps<TDeps extends BaseDeps> = {
+type CommandFooterProps<TDeps extends BaseDeps<any>> = {
 	brand: string;
 	commands: Command<TDeps>[];
 	deps: TDeps;
@@ -50,7 +50,7 @@ function truncateToFit(
 	return cmds.filter((c) => selected.includes(c));
 }
 
-export function CommandFooter<TDeps extends BaseDeps>({
+export function CommandFooter<TDeps extends BaseDeps<any>>({
 	brand,
 	commands,
 	deps,
