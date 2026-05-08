@@ -1,6 +1,6 @@
 import { Box, useStdout } from 'ink';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { TUITheme } from '../../types/theme.js';
 
 export type AppShellProps = {

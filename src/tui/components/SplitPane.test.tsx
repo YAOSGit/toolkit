@@ -1,5 +1,5 @@
-import { render } from 'ink-testing-library';
 import { Text } from 'ink';
+import { render } from 'ink-testing-library';
 import type { TUITheme } from '../../types/theme.js';
 import { SplitPane } from './SplitPane.js';
 

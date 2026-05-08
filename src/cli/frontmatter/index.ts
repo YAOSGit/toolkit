@@ -1,6 +1,6 @@
 import { parse as parseYaml } from 'yaml';
 
-const FRONTMATTER_RE = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
+const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
 
 // biome-ignore lint/suspicious/noExplicitAny: must accept any Zod version's safeParse result
 type SchemaLike<T> = {

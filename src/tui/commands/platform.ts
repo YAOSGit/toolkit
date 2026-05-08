@@ -15,8 +15,7 @@ export const MOD_KEY = IS_MAC ? 'opt' : 'Alt';
  * Returns a display string like "opt\u00A0+\u00A0f" (macOS) or "Alt\u00A0+\u00A0f" (other).
  * Uses non-breaking spaces so the key hint doesn't wrap.
  */
-export const modKey = (key: string): string =>
-	`${MOD_KEY}\u00A0+\u00A0${key}`;
+export const modKey = (key: string): string => `${MOD_KEY}\u00A0+\u00A0${key}`;
 
 /**
  * Map of letter → composed Unicode character produced by Option+letter on macOS.

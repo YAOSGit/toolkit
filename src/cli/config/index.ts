@@ -14,6 +14,10 @@ function isYamlFile(filePath: string): boolean {
 	return filePath.endsWith('.yaml') || filePath.endsWith('.yml');
 }
 
+function isTsFile(filePath: string): boolean {
+	return filePath.endsWith('.ts') || filePath.endsWith('.mts');
+}
+
 function readConfigFile(filePath: string): Record<string, unknown> {
 	const raw = readFileSync(filePath, 'utf-8');
 	if (isYamlFile(filePath)) {
@@ -49,23 +53,11 @@ function deepMerge(
 	return result;
 }
 
-export function loadConfig<T>(options: ConfigOptions<T>): {
-	config: T;
-	warnings: string[];
-} {
-	let merged: Record<string, unknown> =
-		(options.defaults as Record<string, unknown>) ?? {};
+function parseAndValidate<T>(
+	merged: Record<string, unknown>,
+	options: ConfigOptions<T>,
+): { config: T; warnings: string[] } {
 	const warnings: string[] = [];
-
-	if (options.global && existsSync(options.global)) {
-		const globalData = readConfigFile(options.global);
-		merged = deepMerge(merged, globalData);
-	}
-
-	if (options.local && existsSync(options.local)) {
-		const localData = readConfigFile(options.local);
-		merged = deepMerge(merged, localData);
-	}
 
 	const result = options.schema.safeParse(merged);
 	if (!result.success) {
@@ -85,6 +77,54 @@ export function loadConfig<T>(options: ConfigOptions<T>): {
 		const config = options.schema.parse(options.defaults ?? {});
 		return { config, warnings };
 	}
+}
+
+export function loadConfig<T>(options: ConfigOptions<T>): {
+	config: T;
+	warnings: string[];
+} {
+	let merged: Record<string, unknown> =
+		(options.defaults as Record<string, unknown>) ?? {};
+
+	if (options.global && existsSync(options.global)) {
+		const globalData = readConfigFile(options.global);
+		merged = deepMerge(merged, globalData);
+	}
+
+	if (options.local && existsSync(options.local)) {
+		const localData = readConfigFile(options.local);
+		merged = deepMerge(merged, localData);
+	}
+
+	return parseAndValidate(merged, options);
+}
+
+async function loadTsConfigFile(
+	filePath: string,
+): Promise<Record<string, unknown>> {
+	const { createJiti } = await import('jiti');
+	const jiti = createJiti(import.meta.url, { interopDefault: true });
+	const mod = await jiti.import(filePath);
+	const config = (mod as Record<string, unknown>).default ?? mod;
+	return config as Record<string, unknown>;
+}
+
+export async function loadConfigAsync<T>(options: ConfigOptions<T>): Promise<{
+	config: T;
+	warnings: string[];
+}> {
+	let merged: Record<string, unknown> =
+		(options.defaults as Record<string, unknown>) ?? {};
+
+	for (const filePath of [options.global, options.local]) {
+		if (!filePath || !existsSync(filePath)) continue;
+		const data = isTsFile(filePath)
+			? await loadTsConfigFile(filePath)
+			: readConfigFile(filePath);
+		merged = deepMerge(merged, data);
+	}
+
+	return parseAndValidate(merged, options);
 }
 
 export function saveConfig(filePath: string, config: unknown): void {

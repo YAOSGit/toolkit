@@ -10,6 +10,8 @@ export function unitConfig(options?: {
 		plugins: options?.plugins,
 		define: {
 			__CLI_VERSION__: JSON.stringify('0.0.0-test'),
+			__BUILD_HASH__: JSON.stringify('test'),
+			__TOOLKIT_VERSION__: JSON.stringify('0.0.0-test'),
 			...options?.define,
 		},
 		test: {
@@ -32,6 +34,8 @@ export function reactConfig(): ViteUserConfig {
 	return {
 		define: {
 			__CLI_VERSION__: JSON.stringify('0.0.0-test'),
+			__BUILD_HASH__: JSON.stringify('test'),
+			__TOOLKIT_VERSION__: JSON.stringify('0.0.0-test'),
 		},
 		test: {
 			name: { label: 'react', color: 'cyan' },

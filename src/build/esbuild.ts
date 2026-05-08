@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { builtinModules, createRequire } from 'node:module';
 import type * as esbuild from 'esbuild';
@@ -16,6 +17,25 @@ export function createEsbuildConfig(options: {
 	const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'));
 	const version = packageJson.version;
 
+	let buildHash = 'unknown';
+	try {
+		buildHash = execSync('git rev-parse --short HEAD', {
+			encoding: 'utf-8',
+		}).trim();
+	} catch {
+		// not in a git repo
+	}
+
+	let toolkitVersion = 'unknown';
+	try {
+		const toolkitPkg = JSON.parse(
+			readFileSync('./node_modules/@yaos-git/toolkit/package.json', 'utf-8'),
+		);
+		toolkitVersion = toolkitPkg.version;
+	} catch {
+		// toolkit not installed locally
+	}
+
 	const builtinPlugins: esbuild.Plugin[] = [
 		{
 			name: 'dedup-react',
@@ -25,9 +45,9 @@ export function createEsbuildConfig(options: {
 				build.onResolve({ filter: dedup }, (args) => {
 					if (args.resolveDir.startsWith(cwd)) return undefined;
 					try {
-						const resolved = createRequire(
-							`${cwd}/package.json`,
-						).resolve(args.path);
+						const resolved = createRequire(`${cwd}/package.json`).resolve(
+							args.path,
+						);
 						return { path: resolved };
 					} catch {
 						return undefined;
@@ -73,6 +93,8 @@ export function createEsbuildConfig(options: {
 		},
 		define: {
 			__CLI_VERSION__: JSON.stringify(version),
+			__BUILD_HASH__: JSON.stringify(buildHash),
+			__TOOLKIT_VERSION__: JSON.stringify(toolkitVersion),
 			...options.define,
 		},
 		supported: {

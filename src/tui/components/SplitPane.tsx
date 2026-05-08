@@ -65,12 +65,20 @@ export function SplitPane({
 	return (
 		<Box flexDirection={flexDir} flexGrow={1}>
 			<Box {...{ [sizeKey]: `${ratio[0]}%` }} flexDirection="column">
-				<PaneWrapper bordered={borders[0]} focused={focusedIndex === 0} theme={theme}>
+				<PaneWrapper
+					bordered={borders[0]}
+					focused={focusedIndex === 0}
+					theme={theme}
+				>
 					{childArray[0]}
 				</PaneWrapper>
 			</Box>
 			<Box {...{ [sizeKey]: `${ratio[1]}%` }} flexDirection="column">
-				<PaneWrapper bordered={borders[1]} focused={focusedIndex === 1} theme={theme}>
+				<PaneWrapper
+					bordered={borders[1]}
+					focused={focusedIndex === 1}
+					theme={theme}
+				>
 					{childArray[1]}
 				</PaneWrapper>
 			</Box>

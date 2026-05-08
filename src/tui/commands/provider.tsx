@@ -87,9 +87,7 @@ export function createCommandsProvider<TDeps extends BaseDeps<any>>(
 								? cmd.confirmMessage(deps)
 								: (cmd.confirmMessage ?? 'Are you sure?');
 						pendingCommandRef.current = cmd;
-						deps.ui.requestConfirmation(message, () =>
-							cmd.execute(deps),
-						);
+						deps.ui.requestConfirmation(message, () => cmd.execute(deps));
 						return;
 					}
 					cmd.execute(deps);

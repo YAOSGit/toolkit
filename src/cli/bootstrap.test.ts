@@ -19,16 +19,23 @@ describe('createCLI', () => {
 		expect(program.description()).toBe('Does things');
 	});
 
-	it('builds a multi-line version string with name, node, and platform', () => {
+	it('builds a branded version string with logo and scoped name', () => {
 		const { program } = createCLI({
 			name: 'my-tool',
 			description: 'desc',
 			version: '3.5.1',
+			buildHash: 'abc1234',
+			toolkitVersion: '0.0.26',
 		});
 		const versionStr = program.version()!;
-		expect(versionStr).toContain('my-tool/3.5.1');
-		expect(versionStr).toContain('node/');
-		expect(versionStr).toContain(process.platform);
+		expect(versionStr).toContain('@yaos-git/my-tool');
+		expect(versionStr).toContain('v3.5.1');
+		expect(versionStr).toContain('\u250C'); // top-left corner
+		expect(versionStr).toContain('\u00BB'); // »
+		expect(versionStr).toContain('\u25CF'); // bullet
+		expect(versionStr).toContain('node');
+		expect(versionStr).toContain('toolkit   0.0.26');
+		expect(versionStr).toContain('build     abc1234');
 	});
 
 	it('allows excess arguments', () => {

@@ -6,11 +6,22 @@ export function createCLI(options: {
 	name: string;
 	description: string;
 	version: string;
+	buildHash?: string;
+	toolkitVersion?: string;
 }): { program: Command } {
+	const scopedName = `@yaos-git/${options.name}`;
+	const build = options.buildHash ?? 'dev';
+	const toolkit = options.toolkitVersion ?? 'unknown';
+
 	const versionString = [
-		`${options.name}/${options.version}`,
-		`node/${process.versions.node}`,
-		process.platform,
+		'\u250C\u2500\u2500\u2500\u2510',
+		`\u2502 \u00BB \u2502  ${scopedName}`,
+		'\u2514\u2500\u25CF\u2500\u2518',
+		'',
+		`       version   ${options.version}`,
+		`       node      ${process.versions.node}`,
+		`       toolkit   ${toolkit}`,
+		`       build     ${build}`,
 	].join('\n');
 
 	const program = new Command()
